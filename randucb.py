@@ -65,3 +65,42 @@ def RandUCB(pa, pb, n, U, epsilon, sig, M):
   #return(np.r_[WaldScore,arm_a_successes,na,arm_b_successes,nb,count_PC))
   return(list(WaldScore=WaldScore,na=na,nb=nb,sa=arm_a_successes,sb=arm_b_successes))
 
+def TSPDD(pa, pb, n, c, burnin == 1):
+    arm_a_successes = np.r_[]
+    arm_a_failures <- np.r_[]
+    arm_b_successes <- np.r_[]
+    arm_b_failures <- np.r_[]
+  
+    arm_a_s <- np.r_[0]
+    arm_a_f <- np.r_[0]
+    arm_b_s <- np.r_[0]
+    arm_b_f <- np.r_[0]
+    
+    for i in range(1, burnin + 1):
+        draw_a = random.random()
+        draw_b = random.random()
+        
+        if (draw_a > draw_b):
+            if random.random() < pa:
+                arm_a_s += 1
+            else:
+                arm_a_f += 1
+        else:
+            if random.random() < pb:
+                arm_b_s += 1
+            else:
+                arm_b_f += 1
+        arm_a_sucesses[i] = arm_a_s
+        arm_a_failures[i] = arm_a_f
+        arm_b_successes[i] = arm_b_s
+        arm_b_failures[i] = arm_b_f
+#na: number of times arm A was pulled. nb: same
+    na = arm_a_successes + arm_a_failures
+    nb = arm_b_successes + arm_b_failures
+    pa_est = arm_a_successes/na
+    pb_est = arm_b_successes/nb
+    WaldScore = (pa_est - pb_est)/math.sqrt(pa_est *(1-pa_est)/na + pb_est*(1-pb_est)/nb)
+#return(c(WaldScore,arm_a_successes,na,arm_b_successes,nb,count_PC))
+    return(list(WaldScore=WaldScore,na=na,nb=nb,sa=arm_a_successes,sb=arm_b_successes)))
+
+
